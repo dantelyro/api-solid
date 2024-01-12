@@ -2,22 +2,23 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { InMemoryCheckInsRepository } from '@/repositories/in-memory/in-memory-check-ins-repositories'
 import { CheckInService } from './check-in'
 import { InMemoryGymsRepository } from '@/repositories/in-memory/in-memory-gym-repositories'
-import { Decimal } from '@prisma/client/runtime/library'
+import { MaxNumbersOfCheckInsError } from './errors/max-numbers-of-check-ins-error'
+import { MaxDistanceError } from './errors/max-distance-error'
 
 let checkInService: CheckInService
 let inMemoryGymsRepository: InMemoryGymsRepository
 let inMemoryCheckInsRepository: InMemoryCheckInsRepository
 
-beforeEach(() => {
+beforeEach(async () => {
   inMemoryCheckInsRepository = new InMemoryCheckInsRepository()
   inMemoryGymsRepository = new InMemoryGymsRepository()
   checkInService = new CheckInService(inMemoryCheckInsRepository, inMemoryGymsRepository)
 
-  inMemoryGymsRepository.items.push({
+  await inMemoryGymsRepository.create({
     id: 'gym-1',
-    description: '',
-    latitude: new Decimal(-29.3879481),
-    longitude: new Decimal(-51.1230879),
+    description: 'TypesScript Gym',
+    latitude: -29.3879481,
+    longitude: -51.1230879,
     phone: '',
     title: ''
   })
@@ -56,7 +57,7 @@ describe('checkInService Service', () => {
       userId: 'user-1',
       userLatitude: -29.3879481,
       userLongitude: -51.1230879
-    })).rejects.toBeInstanceOf(Error)
+    })).rejects.toBeInstanceOf(MaxNumbersOfCheckInsError)
   })
 
   it('should be able to check in twice but in different days', async () => {
@@ -82,11 +83,11 @@ describe('checkInService Service', () => {
   })
 
   it('should not be able to checkIn away from the gym', async () => {
-    inMemoryGymsRepository.items.push({
-      id: 'gym-2',
-      description: '',
-      latitude: new Decimal(-29.3879481),
-      longitude: new Decimal(-51.1230879),
+    await inMemoryGymsRepository.create({
+      id: 'gym-1',
+      description: 'TypesScript Gym',
+      latitude: -29.3879481,
+      longitude: -51.1230879,
       phone: '',
       title: ''
     })
@@ -96,6 +97,6 @@ describe('checkInService Service', () => {
       userId: 'user-1',
       userLatitude: -29.4879481,
       userLongitude: -51.1230879
-    })).rejects.toBeInstanceOf(Error)
+    })).rejects.toBeInstanceOf(MaxDistanceError)
   })
 })
