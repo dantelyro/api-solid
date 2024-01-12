@@ -15,8 +15,6 @@ export class InMemoryCheckInsRepository implements CheckInsRepository {
 
       const isOnSameDate = checkInDate.isAfter(startOfTheDate) && checkInDate.isBefore(endOfTheDate)
 
-      console.log(isOnSameDate)
-
       return checkIn.user_id === userId && isOnSameDate
     })
 

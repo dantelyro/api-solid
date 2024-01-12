@@ -2,10 +2,10 @@ import { type Gym } from '@prisma/client'
 import { type GymsRepository } from '../gyms-repository'
 
 export class InMemoryGymsRepository implements GymsRepository {
-  public gym: Gym[] = []
+  public items: Gym[] = []
 
   async findById (id: string): Promise<Gym | null> {
-    const gym = this.gym.find(gyms => gyms.id === id)
+    const gym = this.items.find(gym => gym.id === id)
 
     if (!gym) {
       return null
