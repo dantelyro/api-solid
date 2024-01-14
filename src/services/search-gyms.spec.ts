@@ -45,7 +45,7 @@ describe('SearchGymsService', () => {
     ])
   })
 
-  it.skip('should be able to fetch a paginated gyms', async () => {
+  it('should be able to fetch a paginated gyms', async () => {
     for (let i = 1; i <= 22; i++) {
       await inMemoryGymsRepository.create({
         title: `Javascript Gym ${i}`,
