@@ -29,4 +29,12 @@ export class InMemoryGymsRepository implements GymsRepository {
 
     return gym
   }
+
+  async findMany (query: string, page: number): Promise<Gym[]> {
+    const gyms = this.items
+      .filter((gym) => gym.title.includes(query))
+      .slice((page - 1) * 20, 40)
+
+    return gyms
+  }
 }
