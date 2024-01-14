@@ -3,16 +3,16 @@ import { describe, expect, it, beforeEach } from 'vitest'
 import { GymService } from './create-gym'
 
 let inMemoryGymsRepository: InMemoryGymsRepository
-let gymService: GymService
+let sut: GymService
 
 beforeEach(() => {
   inMemoryGymsRepository = new InMemoryGymsRepository()
-  gymService = new GymService(inMemoryGymsRepository)
+  sut = new GymService(inMemoryGymsRepository)
 })
 
 describe('gyms registration', () => {
   it('should be able to create a gym', async () => {
-    const test = await gymService.execute({
+    const test = await sut.execute({
       description: 'TypesScript Gym',
       latitude: -29.3879481,
       longitude: -51.1230879,

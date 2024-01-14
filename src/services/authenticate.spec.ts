@@ -5,11 +5,11 @@ import { AuthenticateService } from './authenticate'
 import { InvalidCredentialsError } from './errors/invalid-credentials-error'
 
 let inMemoryUsersRepository: InMemoryUsersRepository
-let authenticate: AuthenticateService
+let sut: AuthenticateService
 
 beforeEach(() => {
   inMemoryUsersRepository = new InMemoryUsersRepository()
-  authenticate = new AuthenticateService(inMemoryUsersRepository)
+  sut = new AuthenticateService(inMemoryUsersRepository)
 })
 
 describe('Authenticate Service', () => {
@@ -20,7 +20,7 @@ describe('Authenticate Service', () => {
       password_hash: await hash('123456', 6)
     })
 
-    const test = await authenticate.execute({
+    const test = await sut.execute({
       email: 'johndoe@example.com',
       password: '123456'
     })
@@ -29,7 +29,7 @@ describe('Authenticate Service', () => {
   })
 
   it('should not be able to authenticate with wrong email', async () => {
-    expect(async () => await authenticate.execute({
+    expect(async () => await sut.execute({
       email: 'gabriel@gmail.com',
       password: '1234567'
     })).rejects.toBeInstanceOf(InvalidCredentialsError)
@@ -42,7 +42,7 @@ describe('Authenticate Service', () => {
       password_hash: await hash('123456', 6)
     })
 
-    expect(async () => await authenticate.execute({
+    expect(async () => await sut.execute({
       email: 'johndoe@example.com',
       password: '1234567'
     })).rejects.toBeInstanceOf(InvalidCredentialsError)

@@ -5,14 +5,14 @@ import { InMemoryGymsRepository } from '@/repositories/in-memory/in-memory-gym-r
 import { MaxNumbersOfCheckInsError } from './errors/max-numbers-of-check-ins-error'
 import { MaxDistanceError } from './errors/max-distance-error'
 
-let checkInService: CheckInService
+let sut: CheckInService
 let inMemoryGymsRepository: InMemoryGymsRepository
 let inMemoryCheckInsRepository: InMemoryCheckInsRepository
 
 beforeEach(async () => {
   inMemoryCheckInsRepository = new InMemoryCheckInsRepository()
   inMemoryGymsRepository = new InMemoryGymsRepository()
-  checkInService = new CheckInService(inMemoryCheckInsRepository, inMemoryGymsRepository)
+  sut = new CheckInService(inMemoryCheckInsRepository, inMemoryGymsRepository)
 
   await inMemoryGymsRepository.create({
     id: 'gym-1',
@@ -32,7 +32,7 @@ afterEach(() => {
 
 describe('checkInService Service', () => {
   it('should be able to create a check in', async () => {
-    const { checkIn } = await checkInService.execute({
+    const { checkIn } = await sut.execute({
       gymId: 'gym-1',
       userId: 'user-1',
       userLatitude: -29.3879481,
@@ -45,14 +45,14 @@ describe('checkInService Service', () => {
   it('should not be able to check in twice a day', async () => {
     vi.setSystemTime(new Date(2023, 0, 21, 8, 0, 0, 0))
 
-    await checkInService.execute({
+    await sut.execute({
       gymId: 'gym-1',
       userId: 'user-1',
       userLatitude: -29.3879481,
       userLongitude: -51.1230879
     })
 
-    await expect(async () => await checkInService.execute({
+    await expect(async () => await sut.execute({
       gymId: 'gym-1',
       userId: 'user-1',
       userLatitude: -29.3879481,
@@ -63,7 +63,7 @@ describe('checkInService Service', () => {
   it('should be able to check in twice but in different days', async () => {
     vi.setSystemTime(new Date(2023, 0, 20, 8, 0, 0, 0))
 
-    await checkInService.execute({
+    await sut.execute({
       gymId: 'gym-1',
       userId: 'user-1',
       userLatitude: -29.3879481,
@@ -72,7 +72,7 @@ describe('checkInService Service', () => {
 
     vi.setSystemTime(new Date(2023, 0, 21, 8, 0, 0, 0))
 
-    const { checkIn } = await checkInService.execute({
+    const { checkIn } = await sut.execute({
       gymId: 'gym-1',
       userId: 'user-1',
       userLatitude: -29.3879481,
@@ -92,7 +92,7 @@ describe('checkInService Service', () => {
       title: ''
     })
 
-    await expect(async () => await checkInService.execute({
+    await expect(async () => await sut.execute({
       gymId: 'gym-1',
       userId: 'user-1',
       userLatitude: -29.4879481,
