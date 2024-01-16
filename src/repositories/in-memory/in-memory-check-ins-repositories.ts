@@ -2,9 +2,20 @@ import { type CheckIn, type Prisma } from '@prisma/client'
 import { randomUUID } from 'node:crypto'
 import { type CheckInsRepository } from '../check-Ins-repositories'
 import dayjs from 'dayjs'
+import { ResourceNotFoundError } from '@/services/errors/resource-not-found-error'
 
 export class InMemoryCheckInsRepository implements CheckInsRepository {
   public items: CheckIn[] = []
+
+  async findById (id: string): Promise<CheckIn | null> {
+    const checkIn = this.items.find(checkIn => checkIn.id === id)
+
+    if (!checkIn) {
+      return null
+    }
+
+    return checkIn
+  }
 
   async findByUserIdOnDate (userId: string, date: Date): Promise<CheckIn | undefined> {
     const startOfTheDate = dayjs(date).startOf('date')
@@ -41,5 +52,16 @@ export class InMemoryCheckInsRepository implements CheckInsRepository {
       .slice((page - 1) * 20, 40)
 
     return checkIns
+  }
+
+  async update (checkIn: CheckIn): Promise<CheckIn> {
+    const checkInIndex = this.items.findIndex(item => item.id === checkIn.id)
+
+    if (checkInIndex >= 0) {
+      this.items[checkInIndex] = checkIn
+      return this.items[checkInIndex]
+    }
+
+    throw new ResourceNotFoundError()
   }
 }

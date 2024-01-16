@@ -30,7 +30,7 @@ afterEach(() => {
   vi.useRealTimers()
 })
 
-describe('checkInService Service', () => {
+describe('checkIn Service', () => {
   it('should be able to create a check in', async () => {
     const { checkIn } = await sut.execute({
       gymId: 'gym-1',
