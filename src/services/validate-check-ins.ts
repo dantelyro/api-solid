@@ -25,15 +25,11 @@ export class ValidateCheckInService {
 
     const differenceInMinutesFromCheckInCreation = dayjs(new Date()).diff(checkIn.created_at, 'minutes')
 
-    console.log(new Date(), checkIn.validated_at, differenceInMinutesFromCheckInCreation)
-
     if (differenceInMinutesFromCheckInCreation > 20) {
       throw new LateCheckInValidationError()
     }
 
     checkIn.validated_at = new Date()
-
-    console.log(checkIn)
 
     this.checkInsRepository.update(checkIn)
 

@@ -17,7 +17,7 @@ export class InMemoryCheckInsRepository implements CheckInsRepository {
     return checkIn
   }
 
-  async findByUserIdOnDate (userId: string, date: Date): Promise<CheckIn | undefined> {
+  async findByUserIdOnDate (userId: string, date: Date): Promise<CheckIn | null> {
     const startOfTheDate = dayjs(date).startOf('date')
     const endOfTheDate = dayjs(date).endOf('date')
 
@@ -28,6 +28,10 @@ export class InMemoryCheckInsRepository implements CheckInsRepository {
 
       return checkIn.user_id === userId && isOnSameDate
     })
+
+    if (!checkInOnSameDate) {
+      return null
+    }
 
     return checkInOnSameDate
   }
