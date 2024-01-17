@@ -1,4 +1,4 @@
-import { PrismaUserRepository } from '@/repositories/prisma-repositories/prisma-users-repositories'
+import { PrismaUserRepository } from '@/repositories/prisma-repositories/prisma-users-repository'
 import { AuthenticateService } from '../authenticate'
 
 export function makeAuthenticateService (): AuthenticateService {

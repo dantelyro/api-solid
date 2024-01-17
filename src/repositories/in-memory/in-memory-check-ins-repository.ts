@@ -1,6 +1,6 @@
 import { type CheckIn, type Prisma } from '@prisma/client'
 import { randomUUID } from 'node:crypto'
-import { type CheckInsRepository } from '../check-Ins-repositories'
+import { type CheckInsRepository } from '../check-Ins-repository'
 import dayjs from 'dayjs'
 import { ResourceNotFoundError } from '@/services/errors/resource-not-found-error'
 

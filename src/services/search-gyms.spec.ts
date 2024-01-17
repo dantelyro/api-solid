@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { SearchGymsService } from './search-gyms'
-import { InMemoryGymsRepository } from '@/repositories/in-memory/in-memory-gym-repositories'
+import { InMemoryGymsRepository } from '@/repositories/in-memory/in-memory-gym-repository'
 
 let sut: SearchGymsService
 let inMemoryGymsRepository: InMemoryGymsRepository

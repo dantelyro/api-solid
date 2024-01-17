@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { InMemoryGymsRepository } from '@/repositories/in-memory/in-memory-gym-repositories'
+import { InMemoryGymsRepository } from '@/repositories/in-memory/in-memory-gym-repository'
 import { NearbyGymService } from './get-nearby-gyms'
 
 let sut: NearbyGymService

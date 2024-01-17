@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { InMemoryCheckInsRepository } from '@/repositories/in-memory/in-memory-check-ins-repositories'
+import { InMemoryCheckInsRepository } from '@/repositories/in-memory/in-memory-check-ins-repository'
 import { ValidateCheckInService } from './validate-check-ins'
 import { ResourceNotFoundError } from './errors/resource-not-found-error'
 import { LateCheckInValidationError } from './errors/late-check-in-validation-error'
@@ -40,12 +40,12 @@ describe('Validate checkIn Service', () => {
   })
 
   it('should not be able to validate the check-in after 20 minutes of its creation', async () => {
+    vi.setSystemTime(new Date(2023, 0, 1, 13, 40))
+
     const createdCheckIn = await inMemoryCheckInsRepository.create({
       gym_id: 'gym-1',
       user_id: 'user-1'
     })
-
-    vi.setSystemTime(new Date(2024, 0, 1, 13, 40))
 
     const twentyOneMinutesInMs = 1000 * 60 * 21
 

@@ -1,7 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { InMemoryCheckInsRepository } from '@/repositories/in-memory/in-memory-check-ins-repositories'
+import { InMemoryCheckInsRepository } from '@/repositories/in-memory/in-memory-check-ins-repository'
 import { CheckInService } from './check-in'
-import { InMemoryGymsRepository } from '@/repositories/in-memory/in-memory-gym-repositories'
+import { InMemoryGymsRepository } from '@/repositories/in-memory/in-memory-gym-repository'
 import { MaxNumbersOfCheckInsError } from './errors/max-numbers-of-check-ins-error'
 import { MaxDistanceError } from './errors/max-distance-error'
 
