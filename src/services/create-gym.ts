@@ -1,7 +1,7 @@
 import { type Gym } from '@prisma/client'
 import { type GymsRepository } from '@/repositories/gyms-repository'
 
-interface GymServiceRequest {
+interface CreateGymServiceRequest {
   title: string
   description: string | null
   phone: string | null
@@ -9,14 +9,14 @@ interface GymServiceRequest {
   longitude: number
 }
 
-interface GymServiceResponse {
+interface CretateGymServiceResponse {
   gym: Gym
 }
 
-export class GymService {
+export class CreateGymService {
   constructor (private readonly gymRepository: GymsRepository) {}
 
-  async execute ({ description, latitude, longitude, phone, title }: GymServiceRequest): Promise<GymServiceResponse> {
+  async execute ({ description, latitude, longitude, phone, title }: CreateGymServiceRequest): Promise<CretateGymServiceResponse> {
     const gym = await this.gymRepository.create({
       title,
       description,
