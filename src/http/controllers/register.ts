@@ -14,6 +14,7 @@ export async function register (request: FastifyRequest, reply: FastifyReply): P
 
   try {
     const registerService = makeRegisterService()
+
     await registerService.createNewUser({ name, email, password })
   } catch (error) {
     if (error instanceof UserAlreadyExistsError) {
