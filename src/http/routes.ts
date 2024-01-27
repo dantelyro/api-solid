@@ -8,5 +8,5 @@ export async function appRoutes (app: FastifyInstance): Promise<void> {
   app.post('/users', register)
   app.post('/sessions', authenticate)
 
-  app.post('/profile', { onRequest: [jwtVerify] }, profile)
+  app.post('/me', { onRequest: [jwtVerify] }, profile)
 }
