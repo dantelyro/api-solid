@@ -19,8 +19,7 @@ function generateDataBaseUrl (schema: string): string {
 }
 
 const environment: Environment = {
-  name: 'Prisma',
-  transformMode: 'ssr',
+  name: 'prisma',
 
   async setup () {
     const schema = randomUUID()
