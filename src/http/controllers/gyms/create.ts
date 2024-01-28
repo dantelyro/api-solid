@@ -3,7 +3,7 @@ import { type FastifyReply, type FastifyRequest } from 'fastify'
 import { z } from 'zod'
 
 export async function create (request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> {
-  const registerBodySchema = z.object({
+  const createGymsBodySchema = z.object({
     title: z.string(),
     description: z.string().nullable(),
     phone: z.string().nullable(),
@@ -15,7 +15,7 @@ export async function create (request: FastifyRequest, reply: FastifyReply): Pro
     })
   })
 
-  const { title, description, latitude, longitude, phone } = registerBodySchema.parse(request.body)
+  const { title, description, latitude, longitude, phone } = createGymsBodySchema.parse(request.body)
 
   const createGymService = makeCreateGymService()
 
