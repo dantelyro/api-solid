@@ -2,7 +2,7 @@ import { makeValidateCheckInService } from '@/services/factories/make-validate-c
 import { type FastifyReply, type FastifyRequest } from 'fastify'
 import { z } from 'zod'
 
-export async function validateCheckIn (request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> {
+export async function validateCheckIn (request: FastifyRequest, reply: FastifyReply): Promise<void> {
   const validateParamsSchema = z.object({
     checkInId: z.string().uuid()
   })

@@ -3,15 +3,13 @@ import { makeAuthenticateService } from '@/services/factories/make-authenticate-
 import { type FastifyReply, type FastifyRequest } from 'fastify'
 import { z } from 'zod'
 
-export async function authenticate (request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> {
+export async function authenticate (request: FastifyRequest, reply: FastifyReply): Promise<void> {
   const authenticateBodySchema = z.object({
     email: z.string().email(),
     password: z.string().min(6)
   })
 
   const { email, password } = authenticateBodySchema.parse(request.body)
-
-  let token
 
   try {
     const authenticate = makeAuthenticateService()
@@ -21,14 +19,39 @@ export async function authenticate (request: FastifyRequest, reply: FastifyReply
       password
     })
 
-    token = await reply.jwtSign({}, { sign: { sub: user.id } })
+    const token = await reply.jwtSign(
+      {},
+      {
+        sign: {
+          sub: user.id
+        }
+      })
+
+    const refreshToken = await reply.jwtSign(
+      {},
+      {
+        sign: {
+          sub: user.id,
+          expiresIn: '7d'
+        }
+      })
+
+    return await reply
+      .setCookie('refreshToken', refreshToken, {
+        path: '/',
+        secure: true,
+        sameSite: true,
+        httpOnly: true
+      })
+      .status(200)
+      .send({
+        token
+      })
   } catch (error) {
     if (error instanceof InvalidCredentialsError) {
       return await reply.status(409).send({ message: error.message })
     }
-  }
 
-  return await reply.status(200).send({
-    token
-  })
+    throw error
+  }
 }

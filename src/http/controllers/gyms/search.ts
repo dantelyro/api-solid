@@ -2,7 +2,7 @@ import { makeSearchGymService } from '@/services/factories/make-search-gyms'
 import { type FastifyReply, type FastifyRequest } from 'fastify'
 import { z } from 'zod'
 
-export async function search (request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> {
+export async function search (request: FastifyRequest, reply: FastifyReply): Promise<void> {
   const searchGymsBodySchema = z.object({
     query: z.string(),
     page: z.coerce.number().min(1).default(1)

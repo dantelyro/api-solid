@@ -2,7 +2,7 @@ import { makeCreateGymService } from '@/services/factories/make-create-gym'
 import { type FastifyReply, type FastifyRequest } from 'fastify'
 import { z } from 'zod'
 
-export async function create (request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> {
+export async function create (request: FastifyRequest, reply: FastifyReply): Promise<void> {
   const createGymsBodySchema = z.object({
     title: z.string(),
     description: z.string().nullable(),

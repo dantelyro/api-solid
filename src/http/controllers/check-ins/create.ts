@@ -2,7 +2,7 @@ import { makeCheckInService } from '@/services/factories/make-check-in'
 import { type FastifyReply, type FastifyRequest } from 'fastify'
 import { z } from 'zod'
 
-export async function create (request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> {
+export async function create (request: FastifyRequest, reply: FastifyReply): Promise<void> {
   const createCheckInsParamsSchema = z.object({
     gymId: z.string().uuid()
   })

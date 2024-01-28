@@ -1,7 +1,7 @@
 import { makeGetUserProfileService } from '@/services/factories/make-get-user-profile'
 import { type FastifyReply, type FastifyRequest } from 'fastify'
 
-export async function profile (request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> {
+export async function profile (request: FastifyRequest, reply: FastifyReply): Promise<void> {
   const getUserProfile = makeGetUserProfileService()
 
   const { user } = await getUserProfile.execute({

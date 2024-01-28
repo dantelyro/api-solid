@@ -2,7 +2,7 @@ import { makeUsersCheckInHistotyService } from '@/services/factories/make-get-us
 import { type FastifyReply, type FastifyRequest } from 'fastify'
 import { z } from 'zod'
 
-export async function history (request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> {
+export async function history (request: FastifyRequest, reply: FastifyReply): Promise<void> {
   const CheckInHistotyBodySchema = z.object({
     page: z.coerce.number().min(1).default(1)
   })

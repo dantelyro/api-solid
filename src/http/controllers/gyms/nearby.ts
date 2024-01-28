@@ -2,7 +2,7 @@ import { makeGetNearbyGymService } from '@/services/factories/make-get-nearby-gy
 import { type FastifyReply, type FastifyRequest } from 'fastify'
 import { z } from 'zod'
 
-export async function nearby (request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> {
+export async function nearby (request: FastifyRequest, reply: FastifyReply): Promise<void> {
   const nearbyGymsBodySchema = z.object({
     userLatitude: z.coerce.number().refine((value) => {
       return Math.abs(value) <= 90
