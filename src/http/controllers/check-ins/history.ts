@@ -11,7 +11,7 @@ export async function history (request: FastifyRequest, reply: FastifyReply): Pr
 
   const createGymService = makeUsersCheckInHistotyService()
 
-  const gyms = await createGymService.execute({ page, userId: request.user.sub })
+  const { checkIns } = await createGymService.execute({ page, userId: request.user.sub })
 
-  return await reply.status(200).send({ gyms })
+  return await reply.status(200).send({ checkIns })
 }
