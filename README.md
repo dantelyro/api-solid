@@ -34,6 +34,7 @@ GymPass style app.
 ## Requirements
 
 install [Docker](https://breakdance.github.io/breakdance/)
+
 install [Node](https://nodejs.org/en) >= v18.19.0
 
 ## To Run
